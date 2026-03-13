@@ -7,8 +7,13 @@ class _DevicesMgr:
     def __init__(self):
         self._serials = list()
 
-    def get_serials(self):
-        if not self._serials:
+    def get_serials(self, csv=None):
+        if csv != None:
+            print ("Connecting to ips in " + csv)
+            with open(csv, "r", encoding="utf-8") as f:
+                lines = [line.rstrip("\n") + ":5555" for line in f]
+            self._serials = lines
+        elif not self._serials:
             self.get_serials_instantly()
         return self._serials
 

@@ -11,7 +11,7 @@ class _ParallelADB:
     def __init__(self):
         self._pool = None
 
-    def run(self, cmd, serials=None, is_shell_cmd=True, print_result=False):
+    def run(self, cmd, serials=None, is_shell_cmd=True, print_result=False, csv=None):
         """
         :param cmd: adb shell command in shell mode, like 'pm clear com.example.pkg'
         :param serials: [serial1, serial2, ..]
@@ -21,13 +21,15 @@ class _ParallelADB:
         :param print_result: print the result from adb command line, default is False
         :return: the command output for each serial
         """
-        applied_serials = serials if serials else DevicesMgr.get_serials()
-
+        applied_serials = serials if serials else DevicesMgr.get_serials(csv)
+        print (applied_serials)
         if not self._pool:
             self._pool = ThreadPool(10)
 
         def _call_shell_cmd(s):
-            if is_shell_cmd:
+            if csv != None:
+                full_cmd = 'adb connect {}'
+            elif is_shell_cmd:
                 full_cmd = 'adb -s {} shell "{}"'
             else:
                 # non shell mode command needs to skip quote
