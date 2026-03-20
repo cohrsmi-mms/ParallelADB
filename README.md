@@ -2,32 +2,8 @@ ParallelADB
 =============
 Enable adb command parallel run in all connected devices.
 
-
-Install
+Usage
 -------
-``` sh
-$ pip install parallel-adb
-```
+Use `parallel-connect.py [text file containing newline-separated IP addresses]` to connect to devices in parallel.
 
-Example
--------
-``` python
-from paralleladb import ParallelADB
-
-outputs = ParallelADB.run('pm list packages')
-
-for o in outputs:
-    print(o)
-
-# Output: ADBOutputs(serial='emulator-x', results=['...'])
-
-outputs = ParallelADB.run('forward tcp:4274 tcp:4724', is_shell_cmd=False, print_result=True)
-
-for o in outputs:
-    print(o)
-
-outputs = ParallelADB.run('cd /sdcard && ls', serials=['emulator-5554'])
-
-for o in outputs:
-    print(o)
-```
+Adapt and use `parallel-cmd.py` to run adb commands in parallel.
