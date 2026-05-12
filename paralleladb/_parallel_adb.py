@@ -28,7 +28,7 @@ class _ParallelADB:
 
         def _call_shell_cmd(s):
             if csv != None:
-                full_cmd = 'adb connect {}'
+                full_cmd = 'timeout 5 adb connect {}'
             elif is_shell_cmd:
                 full_cmd = 'adb -s {} shell "{}"'
             else:
